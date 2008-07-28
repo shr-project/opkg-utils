@@ -139,6 +139,7 @@ class Package:
         self.installed_size = None
         self.filename = None
         self.isdeb = 0
+        self.file_ext_opk = "ipk"
         self.homepage = None
         self.oe = None
         self.priority = None
@@ -320,6 +321,12 @@ class Package:
         f.close()
         return self.file_list
 
+    def set_package_extension(self, ext="ipk"):
+        self.file_ext_opk = ext
+
+    def get_package_extension(self):
+        return self.file_ext_opk
+
     def write_package(self, dirname):
         buf = self.render_control()
         file = open("%s/control" % self.meta_dir, 'w')
@@ -355,7 +362,7 @@ class Package:
 
                 bits = bits + " data.tar.gz"
 
-        file = "%s_%s_%s.opk" % (self.package, self.version, self.architecture)
+        file = "%s_%s_%s.%s" % (self.package, self.version, self.architecture, self.get_package_extension())
         cmd = "cd %s ; tar cvfz %s/%s %s" % (self.scratch_dir,
                                              dirname,
                                              file,

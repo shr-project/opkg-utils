@@ -158,12 +158,14 @@ You probably want to chown these to a system user: " >&2
 ogargs=""
 outer=ar
 noclean=0
-ipkext=0
-usage="Usage: $0 [-c] [-C] [-i] [-o owner] [-g group] <pkg_directory> [<destination_directory>]"
+opkext=0
+usage="Usage: $0 [-c] [-C] [-O] [-o owner] [-g group] <pkg_directory> [<destination_directory>]"
 while getopts "cg:ho:v" opt; do
     case $opt in
 	o ) owner=$OPTARG
 	    ogargs="--owner=$owner"
+	    ;;
+	O ) opkext=1
 	    ;;
 	g ) group=$OPTARG
 	    ogargs="$ogargs --group=$group"
@@ -172,8 +174,6 @@ while getopts "cg:ho:v" opt; do
             ;;
         C ) noclean=1
             ;;
-	i ) ipkext=1
-	    ;;
 	v ) echo $version
 	    exit 0
 	    ;;
@@ -239,10 +239,10 @@ rm $tmp_dir/tarX
 
 echo "2.0" > $tmp_dir/debian-binary
 
-if (( $ipkext == 1)); then 
-	pkg_file=$dest_dir/${pkg}_${version}_${arch}.ipk
-else
+if (( $opkext == 1)); then 
 	pkg_file=$dest_dir/${pkg}_${version}_${arch}.opk
+else
+	pkg_file=$dest_dir/${pkg}_${version}_${arch}.ipk
 fi
 
 rm -f $pkg_file
