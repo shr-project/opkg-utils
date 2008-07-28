@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# opkg-build -- construct a .ipk from a directory
+# opkg-build -- construct a .opk from a directory
 # Carl Worth <cworth@east.isi.edu>
 # based on a script by Steve Redler IV, steve@sr-tech.com 5-21-2001
 # 2003-04-25 rea@sr.unh.edu
@@ -112,7 +112,7 @@ You probably want to chown these to a system user: " >&2
 	    echo "The Source field contain the URL's or filenames of the source code and any patches" 
 	    echo "used to build this package.  Either gnu-style tarballs or Debian source packages "
 	    echo "are acceptable.  Relative filenames may be used if they are distributed in the same"
-	    echo "directory as the .ipk file."
+	    echo "directory as the .opk file."
 	fi
 
 	disallowed_filename=`disallowed_field Filename`
@@ -158,7 +158,8 @@ You probably want to chown these to a system user: " >&2
 ogargs=""
 outer=ar
 noclean=0
-usage="Usage: $0 [-c] [-C] [-o owner] [-g group] <pkg_directory> [<destination_directory>]"
+ipkext=0
+usage="Usage: $0 [-c] [-C] [-i] [-o owner] [-g group] <pkg_directory> [<destination_directory>]"
 while getopts "cg:ho:v" opt; do
     case $opt in
 	o ) owner=$OPTARG
@@ -171,11 +172,17 @@ while getopts "cg:ho:v" opt; do
             ;;
         C ) noclean=1
             ;;
+	i ) ipkext=1
+	    ;;
 	v ) echo $version
 	    exit 0
 	    ;;
-	h ) 	echo $usage  >&2 ;;
-	\? ) 	echo $usage  >&2
+	h ) 	
+	    echo $usage  >&2 
+	    exit 0
+	    ;;
+	\? ) 	
+	    echo $usage  >&2
 	esac
 done
 
@@ -232,7 +239,12 @@ rm $tmp_dir/tarX
 
 echo "2.0" > $tmp_dir/debian-binary
 
-pkg_file=$dest_dir/${pkg}_${version}_${arch}.ipk
+if (( $ipkext == 1)); then 
+	pkg_file=$dest_dir/${pkg}_${version}_${arch}.ipk
+else
+	pkg_file=$dest_dir/${pkg}_${version}_${arch}.opk
+fi
+
 rm -f $pkg_file
 if [ "$outer" = "ar" ] ; then
   ( cd $tmp_dir && ar -crf $pkg_file ./debian-binary ./data.tar.gz ./control.tar.gz )

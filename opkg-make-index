@@ -93,7 +93,7 @@ if old_filename:
 
 if (verbose):
      sys.stderr.write("Reading in all the package info from %s\n" % (pkg_dir, ))
-files=glob(pkg_dir + '/*.ipk') + glob(pkg_dir + '/*.deb')
+files=glob(pkg_dir + '/*.opk') + glob(pkg_dir + '/*.deb') + glob(pkg_dir + '/*.ipk')
 files.sort()
 for filename in files:
      basename = os.path.basename(filename)

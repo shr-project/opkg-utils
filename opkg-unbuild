@@ -3,13 +3,13 @@
 import sys, os, re
 
 if (len(sys.argv) == 0):
-    print 'usage: %s: package.ipk' % sys.argv[0]
+    print 'usage: %s: package.opk' % sys.argv[0]
     sys.exit(1)
 
 for filename in sys.argv[1:]:
     m = re.match('((.*/)*)(.*)', filename)
     pkg = m.group(3)
-    m = re.match('(.*)((.ipk)|(.deb))', filename)
+    m = re.match('(.*)((.opk)|(.deb)|(.ipk))', filename)
     if m:
         pkg = m.group(1)
 

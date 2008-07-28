@@ -355,7 +355,7 @@ class Package:
 
                 bits = bits + " data.tar.gz"
 
-        file = "%s_%s_%s.ipk" % (self.package, self.version, self.architecture)
+        file = "%s_%s_%s.opk" % (self.package, self.version, self.architecture)
         cmd = "cd %s ; tar cvfz %s/%s %s" % (self.scratch_dir,
                                              dirname,
                                              file,

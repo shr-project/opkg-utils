@@ -1,10 +1,10 @@
 #!/bin/sh
 
 pkg1=$1
-dir1=`echo $pkg1 | sed s/.ipk//`
+dir1=`echo $pkg1 | sed s/.opk//`
 dir1=`basename $dir1` 
 pkg2=$2
-dir2=`echo $pkg2 | sed s/.ipk//`
+dir2=`echo $pkg2 | sed s/.opk//`
 dir2=`basename $dir2` 
 
 opkg-unbuild $pkg2

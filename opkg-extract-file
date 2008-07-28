@@ -3,7 +3,7 @@
 set -e
 
 if [ $# -lt 1 ]; then
-	echo "usage: $0: package.ipk filename ..."
+	echo "usage: $0: package.opk filename ..."
 	exit 1
 fi
 
@@ -32,7 +32,7 @@ esac
 tmpdir=/tmp/opkg-extract-$$
 mkdir $tmpdir
 
-pkgdir=$tmpdir/`basename $opkgfilename | sed 's/.*\///;s/.ipk$//;s/.deb$//'`
+pkgdir=$tmpdir/`basename $opkgfilename | sed 's/.*\///;s/.opk$//;s/.deb$//;s/.ipk$//'`
 
 mkdir -p $pkgdir/CONTROL
 

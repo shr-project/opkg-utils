@@ -111,7 +111,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         dir = sys.argv[1]
     for f in os.listdir(dir):
-        if not f.endswith(".ipk"): continue
+        if not f.endswith(".opk") and not f.endswith(".ipk"): continue
 
         print "=== %s ===" % f
         f = open(dir + "/" + f, "rb")

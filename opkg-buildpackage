@@ -23,7 +23,7 @@
 #   * clean cleans ;-)
 #
 # You should run this with fakeroot (1) or as root.
-# If all went well, you will find a diff file and an *.ipk file in the
+# If all went well, you will find a diff file and an *.opk file in the
 # directory above.
 
 set -e
@@ -206,7 +206,7 @@ for i in ${files_optional} ; do
 	fi
 done
 
-# build the ipk package
+# build the opk package
 owd=`pwd`
 cd ..
 opkg-build /tmp/${pkg} || exit 1
