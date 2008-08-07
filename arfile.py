@@ -87,6 +87,8 @@ class ArFile:
                 return FileSection(self.f, self.f.tell(), size)
 
             # Skip data and loop
+            if size % 2:
+                size = size + 1
             data = self.f.seek(size, 1)
 #            print hex(f.tell())
 
