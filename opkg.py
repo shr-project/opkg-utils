@@ -143,6 +143,7 @@ class Package:
         self.homepage = None
         self.oe = None
         self.priority = None
+        self.tags = None
         self.fn = fn
 
         if fn:
@@ -415,6 +416,7 @@ class Package:
         if self.oe: out = out + "OE: %s\n" % (self.oe)
         if self.homepage: out = out + "HomePage: %s\n" % (self.homepage)
         if self.priority: out = out + "Priority: %s\n" % (self.priority)
+        if self.tags: out = out + "Tags: %s\n" % (self.tags)
         out = out + "\n"
 
         return out
