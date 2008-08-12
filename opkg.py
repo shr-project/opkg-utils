@@ -133,9 +133,9 @@ class Package:
         self.section = None
         self.filename_header = None
         self.file_list = []
-        # md5 is lazy attribute, computed on demand
+        # md5 and size is lazy attribute, computed on demand
         #self.md5 = None
-        self.size = None
+        #self.size = None
         self.installed_size = None
         self.filename = None
         self.isdeb = 0
@@ -179,6 +179,8 @@ class Package:
         if name == "md5":
             self._computeFileMD5()
             return self.md5
+        elif name == 'size':
+            return self._get_file_size()
         else:
             raise AttributeError, name
 
@@ -192,6 +194,14 @@ class Package:
             sum.update(data)
         f.close()
         self.md5 = sum.hexdigest()
+
+    def _get_file_size(self):
+        if not self.fn:
+            self.size = 0;
+        else:
+            stat = os.stat(self.fn)
+            self.size = stat[ST_SIZE]
+        return int(self.size)
 
     def read_control(self, control):
         import os
