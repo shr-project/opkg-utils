@@ -4,7 +4,7 @@ UTILS = opkg-build opkg-unbuild opkg-compare-versions opkg-make-index opkg.py \
 
 DESTDIR=
 PREFIX=/usr/local
-bindir=${prefix}/bin
+bindir=$(PREFIX)/bin
 
 all: opkg-compare-versions
 
@@ -13,7 +13,7 @@ opkg-compare-versions: opkg-compare-versions.c
 
 install: opkg-compare-versions
 	install -d $(DESTDIR)$(bindir)
-	install -m 744 $(UTILS) $(DESTDIR)$(bindir)
+	install -m 755 $(UTILS) $(DESTDIR)$(bindir)
 
 clean:
 	rm -rf opkg-compare-versions
