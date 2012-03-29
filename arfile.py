@@ -54,11 +54,11 @@ class ArFile:
             return FileSection(self.f, self.directory[fname][-1], int(self.directory[fname][5]))
 
         if self.directoryRead:
-            raise IOError, (2, "AR member not found: " + fname)
+            raise IOError("AR member not found: " + fname)
 
         f = self._scan(fname)
         if f == None:
-            raise IOError, (2, "AR member not found: " + fname)
+            raise IOError("AR member not found: " + fname)
         return f
 
 
