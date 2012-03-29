@@ -206,7 +206,7 @@ class Package:
         while 1:
             if not line: break
             line = line.rstrip()
-            lineparts = re.match(r'([\w-]*?):\s*(.*)', line)
+            lineparts = re.match(r'([\w-]*?):\s*(.*)', str(line))
             if lineparts:
                 name = lineparts.group(1).lower()
                 value = lineparts.group(2)
