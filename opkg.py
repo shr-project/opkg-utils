@@ -36,7 +36,7 @@ import tempfile
 import os
 import sys
 import glob
-import md5
+import hashlib
 import re
 import string
 import commands
@@ -188,8 +188,8 @@ class Package:
     def _computeFileMD5(self):
         # compute the MD5.
         f = open(self.fn, "rb")
-        sum = md5.new()
-        while 1:
+        sum = hashlib.md5()
+        while True:
             data = f.read(1024)
             if not data: break
             sum.update(data)
