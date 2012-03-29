@@ -50,7 +50,7 @@ class ArFile:
         self.directoryOffset = self.f.tell()
 
     def open(self, fname):
-        if self.directory.has_key(fname):
+        if fname in self.directory:
             return FileSection(self.f, self.directory[fname][-1], int(self.directory[fname][5]))
 
         if self.directoryRead:

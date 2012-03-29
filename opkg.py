@@ -217,7 +217,7 @@ class Package:
                     self.size = int(value)
                 elif name == 'md5sum':
                     self.md5 = value
-                elif self.__dict__.has_key(name):
+                elif name in self.__dict__:
                     self.__dict__[name] = value
                 else:
                     print("Lost field %s, %s" % (name,value))
@@ -447,7 +447,7 @@ class Packages:
         package = pkg.package
         arch = pkg.architecture
         name = ("%s:%s" % (package, arch))
-        if (not self.packages.has_key(name)):
+        if (name not in self.packages):
             self.packages[name] = pkg
         
         if pkg.compare_version(self.packages[name]) >= 0:
@@ -470,14 +470,14 @@ class Packages:
 
     def write_packages_file(self, fn):
         f = open(fn, "w")
-        names = self.packages.keys()
+        names = list(self.packages.keys())
         names.sort()
         for name in names:
             f.write(self.packages[name].__repr__())
         return    
 
     def keys(self):
-        return self.packages.keys()
+        return list(self.packages.keys())
 
     def __getitem__(self, key):
         return self.packages[key]

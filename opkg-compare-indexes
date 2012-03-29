@@ -18,8 +18,8 @@ pkgs1.read_packages_file(pkg_dir1 + '/Packages')
 pkgs2 = opkg.Packages()
 pkgs2.read_packages_file(pkg_dir2 + '/Packages')
 
-names1 = pkgs1.packages.keys()
-names2 = pkgs2.packages.keys()
+names1 = list(pkgs1.packages.keys())
+names2 = list(pkgs2.packages.keys())
 
 ## union of the two names lists
 pkgs = {}
@@ -28,14 +28,14 @@ for name in names1:
 for name in names2:
     pkgs[name] = pkgs2.packages[name]
 
-names = pkgs.keys()
+names = list(pkgs.keys())
 names.sort() 
 for name in names:
     pkg1 = None
     pkg2 = None
-    if pkgs1.packages.has_key(name):
+    if name in pkgs1.packages:
         pkg1 = pkgs1.packages[name]
-    if pkgs2.packages.has_key(name):
+    if name in pkgs2.packages:
         pkg2 = pkgs2.packages[name]
     if pkg1 and pkg2 and pkg1.version != pkg2.version:
         print("CHANGED: %s from version %s to %s (%s)" % (pkg1.package, pkg1.version, pkg2.version, pkg2.maintainer))
