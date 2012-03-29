@@ -75,7 +75,12 @@ class ArFile:
                 l = self.f.readline()
                 if not l: break
             l = l.replace('`', '')
-            descriptor = l.split()
+            # Field lengths from /usr/include/ar.h:
+            ar_field_lens = [ 16, 12, 6, 6, 8, 10, 2 ]
+            descriptor = []
+            for field_len in ar_field_lens:
+                descriptor.append(l[:field_len].strip())
+                l = l[field_len:]
 #            print descriptor
             size = int(descriptor[5])
             memberName = descriptor[0][:-1]
