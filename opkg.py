@@ -42,6 +42,7 @@ import subprocess
 from stat import ST_SIZE
 import arfile
 import tarfile
+import textwrap
 
 class Version:
     """A class for holding parsed package version information."""
@@ -427,7 +428,9 @@ class Package:
         if self.installed_size: out = out + "InstalledSize: %d\n" % int(self.installed_size)
         if self.filename: out = out + "Filename: %s\n" % (self.filename)
         if self.source: out = out + "Source: %s\n" % (self.source)
-        if self.description: out = out + "Description: %s\n" % (self.description)
+        if self.description:
+            printable_description = textwrap.dedent(self.description).strip()
+            out = out + "Description: %s\n" % textwrap.fill(printable_description, width=74, initial_indent=' ', subsequent_indent=' ')
         if self.oe: out = out + "OE: %s\n" % (self.oe)
         if self.homepage: out = out + "HomePage: %s\n" % (self.homepage)
         if self.license: out = out + "License: %s\n" % (self.license)
