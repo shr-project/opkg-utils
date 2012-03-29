@@ -15,7 +15,7 @@ packages = opkg.Packages()
 
 packages.read_packages_file(pkg_dir + '/Packages')
 
-names = packages.packages.keys()
+names = list(packages.packages.keys())
 
 packages.add_package(opkg.Package(pkg_filename))
 

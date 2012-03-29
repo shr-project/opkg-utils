@@ -79,7 +79,7 @@ if old_filename:
           sys.stderr.write("Reading package list from " + old_filename + "\n")
      old_packages = opkg.Packages()
      old_packages.read_packages_file(old_filename)
-     for k in old_packages.packages.keys():
+     for k in list(old_packages.packages.keys()):
           p = old_packages.packages[k]
           old_pkg_hash[p.filename] = p
      try:
@@ -100,8 +100,8 @@ for filename in files:
      basename = os.path.basename(filename)
      pkg = None
      fnameStat = os.stat(filename)
-     if old_pkg_hash.has_key(basename):
-          if pkgsStamps.has_key(basename) and int(fnameStat.st_mtime) == pkgsStamps[basename]:
+     if basename in old_pkg_hash:
+          if basename in pkgsStamps and int(fnameStat.st_mtime) == pkgsStamps[basename]:
             if (verbose):
                sys.stderr.write("Found %s in Packages\n" % (filename,))
             pkg = old_pkg_hash[basename]
@@ -113,7 +113,7 @@ for filename in files:
                sys.stderr.write("Reading info for package %s\n" % (filename,))
           pkg = opkg.Package(filename)
      pkg_key = ("%s:%s" % (pkg.package, pkg.architecture))
-     if (packages.packages.has_key(pkg_key)):
+     if (pkg_key in packages.packages):
           old_filename = packages.packages[pkg_key].filename
      else:
           old_filename = ""
@@ -139,7 +139,7 @@ for filename in files:
       continue
 
 pkgsStampsFile = open(stamplist_filename, "w")
-for f in pkgsStamps.keys():
+for f in list(pkgsStamps.keys()):
     pkgsStampsFile.write("%d %s\n" % (pkgsStamps[f], f))
 pkgsStampsFile.close()
 
@@ -152,7 +152,7 @@ if packages_filename:
      old_stdout = sys.stdout
      tmp_packages_filename = ("%s.%d" % (packages_filename, os.getpid()))
      sys.stdout = open(tmp_packages_filename, "w")
-names = packages.packages.keys()
+names = list(packages.packages.keys())
 names.sort()
 for name in names:
   try:
@@ -193,7 +193,7 @@ if packages_filename:
 if verbose:
      sys.stderr.write("Generate Packages.filelist file\n")
 files = {}
-names = packages.packages.keys()
+names = list(packages.packages.keys())
 names.sort()
 for name in names:
      try:
@@ -207,13 +207,13 @@ for name in names:
      for fn in fnlist:
           (h,t) = os.path.split(fn)
           if not t: continue
-          if not files.has_key(t): files[t] = name+':'+fn
+          if t not in files: files[t] = name+':'+fn
           else: files[t] = files[t] + ',' + name+':'+fn
 
 if filelist_filename:
      tmp_filelist_filename = ("%s.%d" % (filelist_filename, os.getpid()))
      sys.stdout = open(tmp_filelist_filename, "w")
-     names = files.keys()
+     names = list(files.keys())
      names.sort()
      for name in names:
           print((name,files[name]))
