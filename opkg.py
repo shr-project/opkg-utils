@@ -344,11 +344,11 @@ class Package:
         return self.file_ext_opk
 
     def write_package(self, dirname):
-        buf = self.render_control()
-        file = open("%s/control" % self.meta_dir, 'w')
-        file.write(buf)
-
         self._setup_scratch_area()
+        file = open("%s/control" % self.meta_dir, 'w')
+        file.write(str(self))
+        file.close()
+
         cmd = "cd %s ; tar cvfz %s/control.tar.gz control" % (self.meta_dir,
                                                               self.scratch_dir)
 
