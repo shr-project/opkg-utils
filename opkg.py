@@ -138,7 +138,6 @@ class Package:
         #self.size = None
         self.installed_size = None
         self.filename = None
-        self.isdeb = 0
         self.file_ext_opk = "ipk"
         self.homepage = None
         self.oe = None
@@ -150,18 +149,12 @@ class Package:
         if fn:
             # see if it is deb format
             f = open(fn, "rb")
-            magic = f.read(4)
-            f.seek(0, 0)
-            if (magic == "!<ar"):
-                self.isdeb = 1
-
 
             self.filename = os.path.basename(fn)
-            assert self.isdeb == 1, "Old ipk format (non-deb) is unsupported"
 
             ## sys.stderr.write("  extracting control.tar.gz from %s\n"% (fn,)) 
 
-            ar = arfile.ArFile(f)
+            ar = arfile.ArFile(f, fn)
             tarStream = ar.open("control.tar.gz")
             tarf = tarfile.open("control.tar.gz", "r", tarStream)
 
@@ -330,7 +323,7 @@ class Package:
         if not self.fn:
             return []
         f = open(self.fn, "rb")
-        ar = arfile.ArFile(f)
+        ar = arfile.ArFile(f, self.fn)
         tarStream = ar.open("data.tar.gz")
         tarf = tarfile.open("data.tar.gz", "r", tarStream)
         self.file_list = tarf.getnames()

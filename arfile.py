@@ -40,13 +40,13 @@ class FileSection:
 
 class ArFile:
 
-    def __init__(self, f):
+    def __init__(self, f, fn):
         self.f = f
         self.directory = {}
         self.directoryRead = False
 
         signature = self.f.readline()
-        assert signature == "!<arch>\n"
+        assert signature == "!<arch>\n" or signature == b"!<arch>\n", "Old ipk format (non-deb) is unsupported, file: %s, magic: %s, expected %s" % (fn, signature, "!<arch>")
         self.directoryOffset = self.f.tell()
 
     def open(self, fname):
@@ -100,9 +100,10 @@ class ArFile:
 
 if __name__ == "__main__":
     if None:
-        f = open(sys.argv[1], "rb")
+        fn = sys.argv[1]
+        f = open(fn, "rb")
 
-        ar = ArFile(f)
+        ar = ArFile(f, fn)
         tarStream = ar.open("data.tar.gz")
         print "--------"
         tarStream = ar.open("data.tar.gz")
@@ -120,10 +121,11 @@ if __name__ == "__main__":
     for f in os.listdir(dir):
         if not f.endswith(".opk") and not f.endswith(".ipk"): continue
 
-        print "=== %s ===" % f
-        f = open(dir + "/" + f, "rb")
+        print("=== %s ===" % f)
+        fn = "%s/%s" % (dir, f)
+        f = open(fn, "rb")
 
-        ar = ArFile(f)
+        ar = ArFile(f, fn)
         tarStream = ar.open("control.tar.gz")
         tarf = tarfile.open("control.tar.gz", "r", tarStream)
         #tarf.list()
