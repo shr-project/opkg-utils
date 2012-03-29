@@ -4,7 +4,6 @@ import sys, os, posixpath
 from glob import glob
 import opkg
 import getopt
-import string
 import re
 
 verbose = 0
@@ -32,11 +31,11 @@ provider_hash = {}
 
 def split_list(str):
      r = []
-     l = string.split(str, ",")
+     l = str.split(",")
      for i in l:
-          ll = string.split(i, "|")
+          ll = i.split("|")
           for ii in ll:
-               ii = string.strip(ii)
+               ii = ii.strip()
                r.append(ii)
      return r
 
@@ -46,9 +45,9 @@ for i in list(packages.packages.keys()):
           provider_hash[p.package] = []
      provider_hash[p.package].append(p)
      if p.provides:
-          provides = string.split(p.provides, ",")
+          provides = p.provides.split(",")
           for prov in provides:
-               prov = string.strip(prov)
+               prov = prov.strip()
                if prov not in provider_hash:
                     provider_hash[prov] = []
                provider_hash[prov].append(p)

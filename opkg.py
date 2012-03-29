@@ -38,7 +38,6 @@ import sys
 import glob
 import hashlib
 import re
-import string
 import subprocess
 from stat import ST_SIZE
 import arfile
@@ -203,10 +202,10 @@ class Package:
         line = control.readline()
         while 1:
             if not line: break
-            line = string.rstrip(line)
+            line = line.rstrip()
             lineparts = re.match(r'([\w-]*?):\s*(.*)', line)
             if lineparts:
-                name = string.lower(lineparts.group(1))
+                name = lineparts.group(1).lower()
                 value = lineparts.group(2)
                 while 1:
                     line = control.readline()
