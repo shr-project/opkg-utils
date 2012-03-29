@@ -101,7 +101,7 @@ for filename in files:
      pkg = None
      fnameStat = os.stat(filename)
      if old_pkg_hash.has_key(basename):
-          if pkgsStamps.has_key(basename) and fnameStat.st_mtime == pkgsStamps[basename]:
+          if pkgsStamps.has_key(basename) and int(fnameStat.st_mtime) == pkgsStamps[basename]:
             if (verbose):
                sys.stderr.write("Found %s in Packages\n" % (filename,))
             pkg = old_pkg_hash[basename]
