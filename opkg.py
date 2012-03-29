@@ -157,8 +157,6 @@ class Package:
             tarStream = ar.open("control.tar.gz")
             tarf = tarfile.open("control.tar.gz", "r", tarStream)
 
-            print("Reading control file of package '%s'" % fn)
-
             try:
                 control = tarf.extractfile("control")
             except KeyError:
@@ -205,7 +203,6 @@ class Package:
         import os
 
         line = control.readline()
-        print("Reading line: %s" % line)
         while 1:
             if not line: break
             line = line.rstrip()
@@ -218,7 +215,6 @@ class Package:
                     if not line: break
                     if line[0] != ' ': break
                     value = value + '\n' + line
-                print("Found field '%s', value '%s'" % (name,value))
                 if name == 'size':
                     self.size = int(value)
                 elif name == 'md5sum':
@@ -233,7 +229,6 @@ class Package:
                     return # consumes one blank line at end of package descriptoin
             else:
                 line = control.readline()
-                print("Reading line: %s" % line)
                 pass
         return    
 
