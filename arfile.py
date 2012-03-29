@@ -74,6 +74,7 @@ class ArFile:
             if l == "\n":
                 l = self.f.readline()
                 if not l: break
+            l = l.decode('ascii')
             l = l.replace('`', '')
             # Field lengths from /usr/include/ar.h:
             ar_field_lens = [ 16, 12, 6, 6, 8, 10, 2 ]
