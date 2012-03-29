@@ -161,7 +161,10 @@ class Package:
                 control = tarf.extractfile("control")
             except KeyError:
                 control = tarf.extractfile("./control")
-            self.read_control(control)
+            try:
+                self.read_control(control)
+            except TypeError as e:
+                sys.stderr.write("Cannot read control file '%s' - %s\n" % (fn, e))
             control.close()
 
         self.scratch_dir = None
@@ -457,9 +460,13 @@ class Packages:
 
     def read_packages_file(self, fn):
         f = open(fn, "r")
-        while 1:
+        while True:
             pkg = Package()
-            pkg.read_control(f)
+            try:
+                pkg.read_control(f)
+            except TypeError as e:
+                sys.stderr.write("Cannot read control file '%s' - %s\n" % (fn, e))
+                continue
             if pkg.get_package():
                 self.add_package(pkg)
             else:
