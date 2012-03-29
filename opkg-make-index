@@ -2,7 +2,7 @@
 
 import sys, os, posixpath
 from glob import glob
-import commands
+import subprocess
 import opkg
 import getopt
 import string
@@ -186,8 +186,8 @@ if packages_filename:
      gzip_filename = ("%s.gz" % packages_filename)
      tmp_gzip_filename = ("%s.%d" % (gzip_filename, os.getpid()))
      gzip_cmd = "gzip -9c < %s > %s" % (tmp_packages_filename, tmp_gzip_filename)
-     (rc, outtext) = commands.getstatusoutput(gzip_cmd)
-     print outtext
+     print(gzip_cmd)
+     rc = subprocess.check_output(gzip_cmd, shell=True)
      os.rename(tmp_packages_filename, packages_filename)
      os.rename(tmp_gzip_filename, gzip_filename)
 

@@ -2,7 +2,6 @@
 
 import sys, os, posixpath
 from glob import glob
-import commands
 import opkg
 import getopt
 import string

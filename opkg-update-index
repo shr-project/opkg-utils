@@ -2,7 +2,6 @@
 
 import sys, os
 from glob import glob
-import commands
 import opkg
 
 pkg_dir=sys.argv[1]
