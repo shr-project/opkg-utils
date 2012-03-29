@@ -176,7 +176,7 @@ class Package:
         elif name == 'size':
             return self._get_file_size()
         else:
-            raise AttributeError, name
+            raise AttributeError(name)
 
     def _computeFileMD5(self):
         # compute the MD5.

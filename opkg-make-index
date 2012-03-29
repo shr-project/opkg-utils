@@ -198,10 +198,10 @@ names.sort()
 for name in names:
      try:
           fnlist = packages[name].get_file_list()
-     except OSError, e:
+     except OSError as e:
           sys.stderr.write("Package %s disappeared on us!\n" % (name))
           continue
-     except IOError, e:
+     except IOError as e:
           sys.stderr.write("Package %s disappeared on us!\n" % (name))
           continue
      for fn in fnlist:
