@@ -148,9 +148,8 @@ if opt_s:
 if verbose:
      sys.stderr.write("Generating Packages file\n")
 if packages_filename:
-     old_stdout = sys.stdout
      tmp_packages_filename = ("%s.%d" % (packages_filename, os.getpid()))
-     sys.stdout = open(tmp_packages_filename, "w")
+     pkgsFile = open(tmp_packages_filename, "w")
 names = list(packages.packages.keys())
 names.sort()
 for name in names:
@@ -171,7 +170,10 @@ for name in names:
               continue
      if (verbose):
           sys.stderr.write("Writing info for package %s\n" % (pkg.package,))
-     print(pkg)
+     if packages_filename:
+          print >>pkgsFile, pkg
+     else
+          print(pkg)
   except OSError as e:
       sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (name, e))
       continue
@@ -180,8 +182,7 @@ for name in names:
       continue
 
 if packages_filename:
-     sys.stdout.close()
-     sys.stdout = old_stdout
+     pkgsFile.close()
      gzip_filename = ("%s.gz" % packages_filename)
      tmp_gzip_filename = ("%s.%d" % (gzip_filename, os.getpid()))
      gzip_cmd = "gzip -9c < %s > %s" % (tmp_packages_filename, tmp_gzip_filename)
@@ -212,12 +213,12 @@ for name in names:
 
 if filelist_filename:
      tmp_filelist_filename = ("%s.%d" % (filelist_filename, os.getpid()))
-     sys.stdout = open(tmp_filelist_filename, "w")
+     f = open(tmp_filelist_filename, "w")
      names = list(files.keys())
      names.sort()
      for name in names:
-          print((name,files[name]))
-     sys.stdout.close()
+          f.write("%s %s\n" % (name, files[name]))
+     f.close()
      if posixpath.exists(filelist_filename):
           os.unlink(filelist_filename)
      os.rename(tmp_filelist_filename, filelist_filename)
