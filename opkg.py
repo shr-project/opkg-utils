@@ -39,7 +39,7 @@ import glob
 import hashlib
 import re
 import string
-import commands
+import subprocess
 from stat import ST_SIZE
 import arfile
 import tarfile
