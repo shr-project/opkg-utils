@@ -20,7 +20,7 @@ class FileSection:
         self.seek(0, 0)
 
     def seek(self, offset, whence = 0):
-#        print "seek(%x, %d)" % (offset, whence)
+#        print("seek(%x, %d)" % (offset, whence))
         if whence == 0:
             return self.f.seek(offset + self.offset, whence)
         elif whence == 1:
@@ -31,11 +31,11 @@ class FileSection:
             assert False
 
     def tell(self):
-#        print "tell()"
+#        print("tell()")
         return self.f.tell() - self.offset
 
     def read(self, size = -1):
-#        print "read(%d)" % size
+#        print("read(%d)" % size)
         return self.f.read(size)
 
 class ArFile:
@@ -82,11 +82,11 @@ class ArFile:
             for field_len in ar_field_lens:
                 descriptor.append(l[:field_len].strip())
                 l = l[field_len:]
-#            print descriptor
+#            print(descriptor)
             size = int(descriptor[5])
             memberName = descriptor[0][:-1]
             self.directory[memberName] = descriptor + [self.f.tell()]
-#            print "read:", memberName
+#            print(("read:", memberName))
             if memberName == fname:
                 # Record directory offset to start from next time
                 self.directoryOffset = self.f.tell() + size
@@ -96,7 +96,7 @@ class ArFile:
             if size % 2:
                 size = size + 1
             data = self.f.seek(size, 1)
-#            print hex(f.tell())
+#            print(hex(self.f.tell()))
 
 
 if __name__ == "__main__":
@@ -106,11 +106,11 @@ if __name__ == "__main__":
 
         ar = ArFile(f, fn)
         tarStream = ar.open("data.tar.gz")
-        print "--------"
+        print("--------")
         tarStream = ar.open("data.tar.gz")
-        print "--------"
+        print("--------")
         tarStream = ar.open("control.tar.gz")
-        print "--------"
+        print("--------")
         tarStream = ar.open("control.tar.gz2")
 
         sys.exit(0)
@@ -132,4 +132,4 @@ if __name__ == "__main__":
         #tarf.list()
 
         f2 = tarf.extractfile("control")
-        print f2.read()
+        print(f2.read())
