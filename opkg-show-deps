@@ -83,5 +83,5 @@ for root in remaining_args:
           recurse(p)
      
 for pkg in required.keys():
-     print pkg
+     print(pkg)
 

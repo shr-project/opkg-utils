@@ -125,12 +125,12 @@ for filename in files:
                if opt_m:
                     to_morgue(old_filename)
                if opt_s:
-                    print pkg_dir + "/" + old_filename
+                    print(("%s/%s" % (pkg_dir, old_filename)))
      else:
           if opt_m:
                to_morgue(basename)
           if opt_s:
-               print filename
+               print(filename)
   except OSError:
       sys.stderr.write("Package %s disappeared on us!\n" % (filename))
       continue
@@ -172,7 +172,7 @@ for name in names:
               continue
      if (verbose):
           sys.stderr.write("Writing info for package %s\n" % (pkg.package,))
-     print pkg
+     print(pkg)
   except OSError:
       sys.stderr.write("Package %s disappeared on us!\n" % (name))
       continue
@@ -217,7 +217,7 @@ if filelist_filename:
      names = files.keys()
      names.sort()
      for name in names:
-          print name,files[name]
+          print((name,files[name]))
      sys.stdout.close()
      if posixpath.exists(filelist_filename):
           os.unlink(filelist_filename)

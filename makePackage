@@ -11,4 +11,4 @@ import opkg
 
 fn = sys.argv[1]
 pkg = opkg.Package(fn)
-print pkg
+print(pkg)

@@ -56,10 +56,10 @@ class Version:
         while 1:
             ## first look for non-numeric version component
             selfm = re.match('([^0-9]*)(.*)', selfversion)
-            #print 'selfm', selfm.groups()
+            #print(('selfm', selfm.groups()))
             (selfalpha, selfversion) = selfm.groups()
             refm = re.match('([^0-9]*)(.*)', refversion)
-            #print 'refm', refm.groups()
+            #print(('refm', refm.groups())
             (refalpha, refversion) = refm.groups()
             if (selfalpha > refalpha):
                 return 1
@@ -68,8 +68,8 @@ class Version:
             ## now look for numeric version component
             (selfnum, selfversion) = re.match('([0-9]*)(.*)', selfversion).groups()
             (refnum, refversion) = re.match('([0-9]*)(.*)', refversion).groups()
-            #print 'selfnum', selfnum, selfversion
-            #print 'refnum', refnum, refversion
+            #print(('selfnum', selfnum, selfversion)
+            #print(('refnum', refnum, refversion)
             if (selfnum != ''):
                 selfnum = int(selfnum)
             else:
@@ -93,12 +93,12 @@ class Version:
         else:
             self_ver_comps = re.match(r"(.+?)(-r.+)?$", self.version)
             ref_ver_comps = re.match(r"(.+?)(-r.+)?$", ref.version)
-            #print (self_ver_comps.group(1), self_ver_comps.group(2))
-            #print (ref_ver_comps.group(1), ref_ver_comps.group(2))
+            #print((self_ver_comps.group(1), self_ver_comps.group(2)))
+            #print((ref_ver_comps.group(1), ref_ver_comps.group(2)))
             r = self._versioncompare(self_ver_comps.group(1), ref_ver_comps.group(1))
             if r == 0:
                 r = self._versioncompare(self_ver_comps.group(2), ref_ver_comps.group(2))
-            #print "compare: %s vs %s = %d" % (self, ref, r)
+            #print("compare: %s vs %s = %d" % (self, ref, r))
             return r
 
     def __str__(self):
@@ -220,7 +220,7 @@ class Package:
                 elif self.__dict__.has_key(name):
                     self.__dict__[name] = value
                 else:
-                    print "Lost field %s, %s" % (name,value)
+                    print("Lost field %s, %s" % (name,value))
                     pass
 
                 if line and line[0] == '\n':
@@ -391,9 +391,9 @@ class Package:
     def compare_version(self, ref):
         """Compare package versions of self and ref"""
         if not self.version:
-            print 'No version for package %s' % self.package
+            print('No version for package %s' % self.package)
         if not ref.version:
-            print 'No version for package %s' % ref.package
+            print('No version for package %s' % ref.package)
         if not self.parsed_version:
             self.parsed_version = parse_version(self.version)
         if not ref.parsed_version:
@@ -499,9 +499,9 @@ if __name__ == "__main__":
     package.set_depends("libc")
     package.set_description("A test of the APIs.")
 
-    print "<"
+    print("<")
     sys.stdout.write(package)
-    print ">"
+    print(">")
 
     package.write_package("/tmp")
 

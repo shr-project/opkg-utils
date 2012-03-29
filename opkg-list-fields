@@ -9,5 +9,5 @@ def usage():
 if (len(sys.argv) < 2):
      usage()
 
-print opkg.Package(sys.argv[1])
+print(opkg.Package(sys.argv[1]))
 
