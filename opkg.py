@@ -509,10 +509,20 @@ if __name__ == "__main__":
     package.set_architecture("arm")
     package.set_maintainer("Testing <testing@testing.testing>")
     package.set_depends("libc")
-    package.set_description("A test of the APIs.")
+    package.set_description("A test of the APIs. And very long descriptions so often used in oe-core\nfoo\n\n\nbar")
 
     print("<")
     sys.stdout.write(str(package))
+    print(">")
+    f = open("/tmp/control", "w")
+    f.write(str(package))
+    f.close()
+
+    f = open("/tmp/control", "r")
+    package2 = Package()
+    package2.read_control(f)
+    print("<")
+    sys.stdout.write(str(package2))
     print(">")
 
     package.write_package("/tmp")
