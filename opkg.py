@@ -402,7 +402,7 @@ class Package:
             ref.parsed_version = parse_version(ref.version)
         return self.parsed_version.compare(ref.parsed_version)
 
-    def __repr__(self):
+    def __str__(self):
         out = ""
 
         # XXX - Some checks need to be made, and some exceptions
@@ -506,7 +506,7 @@ if __name__ == "__main__":
     package.set_description("A test of the APIs.")
 
     print("<")
-    sys.stdout.write(package)
+    sys.stdout.write(str(package))
     print(">")
 
     package.write_package("/tmp")
