@@ -145,6 +145,7 @@ class Package:
         self.priority = None
         self.tags = None
         self.fn = fn
+        self.license = None
 
         if fn:
             # see if it is deb format
@@ -319,6 +320,12 @@ class Package:
     def get_section(self, section):
         return self.section
 
+    def set_license(self, license):
+        self.license = license
+
+    def get_license(self, license):
+        return self.license
+
     def get_file_list(self):
         if not self.fn:
             return []
@@ -425,6 +432,7 @@ class Package:
         if self.description: out = out + "Description: %s\n" % (self.description)
         if self.oe: out = out + "OE: %s\n" % (self.oe)
         if self.homepage: out = out + "HomePage: %s\n" % (self.homepage)
+        if self.license: out = out + "License: %s\n" % (self.license)
         if self.priority: out = out + "Priority: %s\n" % (self.priority)
         if self.tags: out = out + "Tags: %s\n" % (self.tags)
         out = out + "\n"
