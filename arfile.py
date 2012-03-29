@@ -131,5 +131,8 @@ if __name__ == "__main__":
         tarf = tarfile.open("control.tar.gz", "r", tarStream)
         #tarf.list()
 
-        f2 = tarf.extractfile("control")
+        try:
+            f2 = tarf.extractfile("control")
+        except KeyError:
+            f2 = tarf.extractfile("./control")
         print(f2.read())
