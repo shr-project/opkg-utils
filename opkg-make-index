@@ -131,11 +131,11 @@ for filename in files:
                to_morgue(basename)
           if opt_s:
                print(filename)
-  except OSError:
-      sys.stderr.write("Package %s disappeared on us!\n" % (filename))
+  except OSError as e:
+      sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (filename, e))
       continue
-  except IOError:
-      sys.stderr.write("Package %s disappeared on us!\n" % (filename))
+  except IOError as e:
+      sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (filename, e))
       continue
 
 pkgsStampsFile = open(stamplist_filename, "w")
@@ -173,11 +173,11 @@ for name in names:
      if (verbose):
           sys.stderr.write("Writing info for package %s\n" % (pkg.package,))
      print(pkg)
-  except OSError:
-      sys.stderr.write("Package %s disappeared on us!\n" % (name))
+  except OSError as e:
+      sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (name, e))
       continue
-  except IOError:
-      sys.stderr.write("Package %s disappeared on us!\n" % (name))
+  except IOError as e:
+      sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (name, e))
       continue
 
 if packages_filename:
@@ -200,10 +200,10 @@ for name in names:
      try:
           fnlist = packages[name].get_file_list()
      except OSError as e:
-          sys.stderr.write("Package %s disappeared on us!\n" % (name))
+          sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (name, e))
           continue
      except IOError as e:
-          sys.stderr.write("Package %s disappeared on us!\n" % (name))
+          sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (name, e))
           continue
      for fn in fnlist:
           (h,t) = os.path.split(fn)
