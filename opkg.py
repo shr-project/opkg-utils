@@ -182,14 +182,17 @@ class Package:
 
     def _computeFileMD5(self):
         # compute the MD5.
-        f = open(self.fn, "rb")
-        sum = hashlib.md5()
-        while True:
-            data = f.read(1024)
-            if not data: break
-            sum.update(data)
-        f.close()
-        self.md5 = sum.hexdigest()
+        if not self.fn:
+            self.md5 = 'Unknown'
+        else:
+            f = open(self.fn, "rb")
+            sum = hashlib.md5()
+            while True:
+               data = f.read(1024)
+               if not data: break
+               sum.update(data)
+            f.close()
+            self.md5 = sum.hexdigest()
 
     def _get_file_size(self):
         if not self.fn:
