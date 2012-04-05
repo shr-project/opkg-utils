@@ -190,34 +190,38 @@ if packages_filename:
      os.rename(tmp_packages_filename, packages_filename)
      os.rename(tmp_gzip_filename, gzip_filename)
 
-if verbose:
-     sys.stderr.write("Generate Packages.filelist file\n")
-files = {}
-names = list(packages.packages.keys())
-names.sort()
-for name in names:
-     try:
-          fnlist = packages[name].get_file_list()
-     except OSError as e:
-          sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (name, e))
-          continue
-     except IOError as e:
-          sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (name, e))
-          continue
-     for fn in fnlist:
-          (h,t) = os.path.split(fn)
-          if not t: continue
-          if t not in files: files[t] = name+':'+fn
-          else: files[t] = files[t] + ',' + name+':'+fn
-
 if filelist_filename:
-     tmp_filelist_filename = ("%s.%d" % (filelist_filename, os.getpid()))
-     f = open(tmp_filelist_filename, "w")
-     names = list(files.keys())
-     names.sort()
-     for name in names:
-          f.write("%s %s\n" % (name, files[name]))
-     f.close()
-     if posixpath.exists(filelist_filename):
-          os.unlink(filelist_filename)
-     os.rename(tmp_filelist_filename, filelist_filename)
+    if verbose:
+        sys.stderr.write("Generate Packages.filelist file\n")
+    files = {}
+    names = list(packages.packages.keys())
+    names.sort()
+    for name in names:
+        try:
+            if verbose:
+                sys.stderr.write("Reading filelist for package '%s'\n" % name)
+#            sys.stderr.write("Package for name '%s':\n'%s'\n" % (name, packages[name]))
+            fnlist = packages[name].get_file_list_dir(pkg_dir)
+#            sys.stderr.write("Filelist for package '%s': '%s'\n" % (name, fnlist))
+        except OSError as e:
+            sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (name, e))
+            continue
+        except IOError as e:
+            sys.stderr.write("Package %s disappeared on us!\n(%s)\n" % (name, e))
+            continue
+        for fn in fnlist:
+            (h,t) = os.path.split(fn)
+            if not t: continue
+            if t not in files: files[t] = name+':'+fn
+        else: files[t] = files[t] + ',' + name+':'+fn
+
+    tmp_filelist_filename = ("%s.%d" % (filelist_filename, os.getpid()))
+    f = open(tmp_filelist_filename, "w")
+    names = list(files.keys())
+    names.sort()
+    for name in names:
+         f.write("%s %s\n" % (name, files[name]))
+    f.close()
+    if posixpath.exists(filelist_filename):
+        os.unlink(filelist_filename)
+    os.rename(tmp_filelist_filename, filelist_filename)
