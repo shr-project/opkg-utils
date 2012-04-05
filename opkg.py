@@ -330,9 +330,10 @@ class Package:
             try:
                 cmd = "find %s -name %s | head -n 1" % (directory, self.filename)
                 rc = subprocess.check_output(cmd, shell=True)
-                newfn = str(rc).split()[0]
-#                sys.stderr.write("Package '%s' with empty fn and filename is '%s' was found in '%s', updating fn\n" % (self.package, self.filename, newfn))
-                self.fn = newfn
+                if rc != "":
+                    newfn = str(rc).split()[0]
+#                    sys.stderr.write("Package '%s' with empty fn and filename is '%s' was found in '%s', updating fn\n" % (self.package, self.filename, newfn))
+                    self.fn = newfn
             except OSError as e:
                 sys.stderr.write("Cannot find current fn for package '%s' filename '%s' in dir '%s'\n(%s)\n" % (self.package, self.filename, directory, e))
             except IOError as e:
@@ -342,7 +343,7 @@ class Package:
 
     def get_file_list(self):
         if not self.fn:
-            sys.stderr.write("Package '%s' has empty fn returning empty filelist\n" % (self.package))
+            sys.stderr.write("Package '%s' has empty fn, returning empty filelist\n" % (self.package))
             return []
         f = open(self.fn, "rb")
         ar = arfile.ArFile(f, self.fn)
