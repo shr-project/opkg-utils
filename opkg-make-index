@@ -37,7 +37,7 @@ def to_locale(filename, locale):
 
 old_filename = None
 packages_filename = None
-filelist_filename = "Packages.filelist"
+filelist_filename = None
 stamplist_filename = "Packages.stamps"
 opt_s = 0
 opt_m = 0
