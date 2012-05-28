@@ -160,7 +160,7 @@ outer=ar
 noclean=0
 opkext=0
 usage="Usage: $0 [-c] [-C] [-O] [-o owner] [-g group] <pkg_directory> [<destination_directory>]"
-while getopts "cg:ho:vO" opt; do
+while getopts "cCg:ho:vO" opt; do
     case $opt in
 	o ) owner=$OPTARG
 	    ogargs="--owner=$owner"
