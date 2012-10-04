@@ -213,7 +213,7 @@ if filelist_filename:
             (h,t) = os.path.split(fn)
             if not t: continue
             if t not in files: files[t] = name+':'+fn
-        else: files[t] = files[t] + ',' + name+':'+fn
+            else: files[t] = files[t] + ',' + name+':'+fn
 
     tmp_filelist_filename = ("%s.%d" % (filelist_filename, os.getpid()))
     f = open(tmp_filelist_filename, "w")
